@@ -1,5 +1,5 @@
 enum Day06 {
-  static func solve(input: String) -> Int {
+  static func part1(input: String) -> Int {
     input
       .components(separatedBy: .newlines)
       .filter { !$0.isEmpty }
@@ -16,13 +16,33 @@ enum Day06 {
       }
       .map { numberOfWaysToWin($0) }.reduce(1, *)
   }
+
+  static func part2(input: String) -> Int {
+    let array =
+      input
+      .components(separatedBy: .newlines)
+      .filter { !$0.isEmpty }
+      .map {
+        $0.trimmingCharacters(in: .whitespaces)
+          .split(separator: ":")
+          .dropFirst()
+          .map { $0.replacingOccurrences(of: " ", with: "") }
+      }
+      .flatMap { $0 }
+      .map { Int($0)! }
+    let result = numberOfWaysToWin(array)
+    return result
+  }
 }
 
 func numberOfWaysToWin(_ input: [Int]) -> Int {
-    let (time, distance) = (input[0], input[1])
-    return (0..<time).filter { i in i * (time - i) > distance }.count
+  let (time, distance) = (input[0], input[1])
+  return (0..<time).filter { i in i * (time - i) > distance }.count
 }
 
 let input = try! resourceWithName("input.txt")
-let result = Day06.solve(input: input)
-print("Result: \(result)")
+// let sample = try! resourceWithName("sample.txt")
+let part1 = Day06.part1(input: input)
+print("Part 1: \(part1)")
+let part2 = Day06.part2(input: input)
+print("Part 2: \(part2)")
