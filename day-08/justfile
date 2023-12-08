@@ -1,0 +1,5 @@
+watch:
+    find . -name "*.swift" | entr -r swift run
+
+test:
+    find . -name "*.swift" | entr -r swift test | xcpretty
